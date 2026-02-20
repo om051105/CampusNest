@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dashboard — CampusNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dash-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+            padding-top: 76px;
+        }
+
+        .dash-sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.25rem;
+            position: sticky;
+            top: 76px;
+            height: calc(100vh - 76px);
+            overflow-y: auto;
+        }
+
+        .dash-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.7rem 1rem;
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            font-size: 0.9rem;
+        }
+
+        .dash-nav a:hover,
+        .dash-nav a.active {
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--primary);
+        }
+
+        .dash-nav a .nav-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .dash-sidebar-footer {
+            margin-top: 3rem;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(16, 185, 129, 0.08));
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+        }
+
+        .dash-main {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .user-chip img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .kpi:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .kpi-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .kpi-num {
+            font-size: 1.75rem;
+            font-weight: 800;
+            font-family: 'Outfit';
+        }
+
+        .kpi-trend {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .trend-up {
+            color: var(--secondary);
+        }
+
+        .trend-down {
+            color: var(--danger);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 3fr 2fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.75rem;
+        }
+
+        .pref-form {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .pref-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .prop-dash-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .agreement-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--surface-2);
+            border-radius: var(--radius-md);
+            margin-bottom: 0.75rem;
+        }
+
+        @media(max-width:1024px) {
+            .kpi-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pref-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media(max-width:768px) {
+            .dash-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .dash-sidebar {
+                display: none;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <nav class="navbar" id="navbar" style="background:var(--surface);border-bottom:1px solid var(--border-color);">
+        <div class="container flex justify-between items-center">
+            <a href="index.html" class="nav-brand"><i class="fa-solid fa-house-chimney-window"></i> CampusNest</a>
+            <div class="flex items-center gap-4">
+                <button class="dark-toggle" id="darkToggle">
+                    <div class="toggle-thumb"></div>
+                </button>
+                <a href="listings.html" class="btn btn-outline btn-sm hide-md">Browse Listings</a>
+                <div class="user-chip">
+                    <img src="https://i.pravatar.cc/80?img=3" alt="Profile">
+                    <div>
+                        <div class="font-semibold" style="font-size:0.875rem">Priya Singh</div>
+                        <div class="text-muted" style="font-size:0.75rem">MBA Student</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dash-layout">
+        <aside class="dash-sidebar">
+            <nav class="dash-nav">
+                <a href="#" class="active"><span class="nav-icon"><i class="fa-solid fa-chart-pie"></i></span>
+                    Overview</a>
+                <a href="#"><span class="nav-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span> AI Matches</a>
+                <a href="#"><span class="nav-icon"><i class="fa-solid fa-heart"></i></span> Saved Properties</a>
+                <a href="#"><span class="nav-icon"><i class="fa-solid fa-file-signature"></i></span> Agreements</a>
+                <a href="#"><span class="nav-icon"><i class="fa-solid fa-bell"></i></span> Alerts <span
+                        class="badge badge-danger" style="margin-left:auto;font-size:0.65rem">3</span></a>
+                <a href="#"><span class="nav-icon"><i class="fa-solid fa-gear"></i></span> Preferences</a>
+            </nav>
+            <div class="dash-sidebar-footer">
+                <div class="font-semibold mb-1" style="font-size:0.875rem">🤖 AI Assistant</div>
+                <p class="text-muted" style="font-size:0.75rem;margin-bottom:0.75rem">Ask anything about your rental
+                    search.</p>
+                <button class="btn btn-primary btn-sm w-full" onclick="showToast('info','AI chat coming soon!')">Chat
+                    Now</button>
+            </div>
+        </aside>
+
+        <main class="dash-main">
+            <div class="dash-header">
+                <div>
+                    <h1 style="font-size:1.75rem">Good evening, Priya 👋</h1>
+                    <p class="text-muted text-sm">Here's your personalized rental intelligence dashboard.</p>
+                </div>
+                <button class="btn btn-primary btn-sm"
+                    onclick="showToast('success','Preferences updated. New matches found!')"><i
+                        class="fa-solid fa-refresh"></i> Refresh Matches</button>
+            </div>
+
+            <!-- KPIs -->
+            <div class="kpi-grid">
+                <div class="kpi">
+                    <div class="kpi-icon badge-primary"><i class="fa-solid fa-bolt" style="color:var(--primary)"></i>
+                    </div>
+                    <div>
+                        <div class="text-muted text-sm">New Matches</div>
+                        <div class="kpi-num">12</div>
+                        <div class="kpi-trend trend-up">▲ 3 since yesterday</div>
+                    </div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-icon badge-secondary"><i class="fa-solid fa-eye" style="color:var(--secondary)"></i>
+                    </div>
+                    <div>
+                        <div class="text-muted text-sm">Properties Viewed</div>
+                        <div class="kpi-num">45</div>
+                        <div class="kpi-trend trend-up">▲ 8 this week</div>
+                    </div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-icon badge-accent"><i class="fa-solid fa-heart" style="color:#B45309"></i></div>
+                    <div>
+                        <div class="text-muted text-sm">Saved</div>
+                        <div class="kpi-num">7</div>
+                        <div class="kpi-trend trend-up">▲ 2 new</div>
+                    </div>
+                </div>
+                <div class="kpi">
+                    <div class="kpi-icon badge-danger"><i class="fa-solid fa-file-pdf" style="color:var(--danger)"></i>
+                    </div>
+                    <div>
+                        <div class="text-muted text-sm">Agreements</div>
+                        <div class="kpi-num">1</div>
+                        <div class="kpi-trend" style="color:var(--text-muted)">Active</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preference Form -->
+            <div class="pref-form mb-6">
+                <h3 class="mb-4"><i class="fa-solid fa-sliders text-primary mr-2"></i> Update Your Preference Profile
+                </h3>
+                <div class="pref-grid">
+                    <div class="form-group" style="margin-bottom:0"><label class="form-label">Campus</label><input
+                            class="form-control" value="LPU, Jalandhar" placeholder="Your university"></div>
+                    <div class="form-group" style="margin-bottom:0"><label class="form-label">Max Budget</label><select
+                            class="form-control">
+                            <option>₹8,000/month</option>
+                            <option>₹12,000/month</option>
+                            <option>₹20,000/month</option>
+                        </select></div>
+                    <div class="form-group" style="margin-bottom:0"><label class="form-label">Room Type</label><select
+                            class="form-control">
+                            <option>Studio</option>
+                            <option>PG</option>
+                            <option>1 BHK</option>
+                        </select></div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <div class="flex justify-between items-center mb-1">
+                        <h3>Demand Forecast — Near Your Campus</h3>
+                        <span class="badge badge-primary">AI Powered</span>
+                    </div>
+                    <p class="text-muted text-sm mb-4">⚠️ Peak season: Jul–Aug. Book early to avoid 20-30% price surge!
+                    </p>
+                    <canvas id="demandChart" height="120"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3 class="mb-4">Price by Room Type</h3>
+                    <canvas id="priceChart" height="180"></canvas>
+                </div>
+            </div>
+
+            <!-- Active Agreement -->
+            <div class="chart-card mb-6">
+                <h3 class="mb-4"><i class="fa-solid fa-file-contract text-primary mr-2"></i> Active Rental Agreement
+                </h3>
+                <div class="agreement-row">
+                    <div>
+                        <div class="font-semibold">Luxury Studio — 45 University Road</div>
+                        <div class="text-muted text-sm">Mar 1 – Aug 31, 2026 &bull; ₹8,500/month</div>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="badge badge-secondary">Active</span>
+                        <button class="btn btn-outline btn-sm"
+                            onclick="showToast('success','Agreement downloaded as PDF!')"><i
+                                class="fa-solid fa-download"></i> Download</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Matches -->
+            <h3 class="mb-4"><i class="fa-solid fa-wand-magic-sparkles text-primary mr-2"></i> Top AI Matches For You
+            </h3>
+            <div id="property-grid" class="prop-dash-grid"></div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx1 = document.getElementById('demandChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Demand %',
+                        data: [25, 22, 30, 40, 65, 82, 98, 92, 58, 38, 30, 22],
+                        borderColor: '#4F46E5', backgroundColor: 'rgba(79,70,229,0.1)',
+                        borderWidth: 3, fill: true, tension: 0.4, pointBackgroundColor: '#4F46E5', pointRadius: 4
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 100 } } }
+            });
+            const ctx2 = document.getElementById('priceChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['PG/Hostel', 'Shared', 'Studio', '1 BHK', '2 BHK'],
+                    datasets: [{
+                        label: 'Avg ₹/month',
+                        data: [4500, 5800, 8500, 13000, 20000],
+                        backgroundColor: ['rgba(79,70,229,0.8)', 'rgba(99,102,241,0.7)', 'rgba(129,140,248,0.7)', 'rgba(16,185,129,0.7)', 'rgba(245,158,11,0.7)'],
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+            });
+            renderProperties(window.PROPERTIES ? window.PROPERTIES.slice(0, 4) : [], document.getElementById('property-grid'));
+        });
+    </script>
+</body>
+
+</html>

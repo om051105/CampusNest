@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Properties — CampusNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .page-hero {
+            padding: 7rem 0 2rem;
+            background: linear-gradient(160deg, #EEF2FF 0%, #F8FAFC 100%);
+        }
+
+        body.dark .page-hero {
+            background: linear-gradient(160deg, #1E1B4B 0%, #0F172A 100%);
+        }
+
+        .search-bar-top {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 0.6rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .sf {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0 1rem;
+            flex: 1;
+            min-width: 130px;
+        }
+
+        .sf i {
+            color: var(--primary);
+        }
+
+        .sf input,
+        .sf select {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.875rem;
+            background: transparent;
+            color: var(--text-main);
+        }
+
+        .sd {
+            width: 1px;
+            height: 32px;
+            background: var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 290px 1fr;
+            gap: 1.5rem;
+            align-items: start;
+            margin-top: 1.5rem;
+        }
+
+        .sidebar {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            position: sticky;
+            top: 90px;
+        }
+
+        .filter-title {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .filter-sep {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 1.25rem 0;
+        }
+
+        .cb-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            cursor: pointer;
+            padding: 0.25rem 0;
+        }
+
+        .cb-row input[type=checkbox],
+        .cb-row input[type=radio] {
+            accent-color: var(--primary);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .view-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            border: 1.5px solid var(--border-color);
+            background: var(--surface);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .view-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(79, 70, 229, 0.07);
+        }
+
+        .prop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .prop-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .prop-list .property-card {
+            flex-direction: row;
+        }
+
+        .prop-list .property-card-img {
+            width: 220px;
+            flex-shrink: 0;
+            height: 160px;
+        }
+
+        #map {
+            height: 500px;
+            border-radius: var(--radius-lg);
+            display: none;
+        }
+
+        .active-filters {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .filter-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.75rem;
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .filter-chip button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 0.75rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        @media(max-width:900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .prop-list .property-card {
+                flex-direction: column;
+            }
+
+            .prop-list .property-card-img {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-progress" id="scrollProgress" style="width:0%"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container flex justify-between items-center">
+            <a href="index.html" class="nav-brand"><i class="fa-solid fa-house-chimney-window"></i> CampusNest</a>
+            <ul class="nav-links hide-md">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="listings.html" class="nav-link active">Search</a></li>
+                <li><a href="dashboard.html" class="nav-link">AI Matches</a></li>
+                <li><a href="owner.html" class="nav-link">For Owners</a></li>
+            </ul>
+            <div class="flex items-center gap-4">
+                <button class="dark-toggle" id="darkToggle">
+                    <div class="toggle-thumb"></div>
+                </button>
+                <a href="auth.html" class="btn btn-primary btn-sm">Sign Up</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-hero">
+        <div class="container">
+            <h1 style="font-size:2rem;margin-bottom:1rem">Find Your Perfect Stay</h1>
+            <div class="search-bar-top">
+                <div class="sf"><i class="fa-solid fa-location-dot"></i><input id="searchInput" type="text"
+                        placeholder="University, area, or landmark..."></div>
+                <div class="sd"></div>
+                <div class="sf"><i class="fa-solid fa-rupee-sign"></i>
+                    <select id="budgetSel">
+                        <option value="">Any Budget</option>
+                        <option value="5000">Under ₹5,000</option>
+                        <option value="10000">₹5k - ₹10k</option>
+                        <option value="20000">₹10k - ₹20k</option>
+                        <option value="99999">₹20,000+</option>
+                    </select>
+                </div>
+                <div class="sd"></div>
+                <div class="sf"><i class="fa-solid fa-building"></i>
+                    <select id="typeSel">
+                        <option value="">Any Type</option>
+                        <option value="PG">PG / Hostel</option>
+                        <option value="Studio">Studio</option>
+                        <option value="Apartment">Apartment</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="filterAndRender()"><i class="fa-solid fa-search"></i>
+                    Search</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container section" style="padding-top:1rem">
+        <div class="layout">
+            <aside class="sidebar">
+                <div class="flex justify-between items-center mb-4">
+                    <h3>Advanced Filters</h3>
+                    <button class="btn btn-ghost btn-sm" onclick="clearFilters()">Clear all</button>
+                </div>
+
+                <div class="filter-title"><i class="fa-solid fa-graduation-cap text-primary"></i> Distance from Campus
+                </div>
+                <input type="range" min="1" max="10" value="5" id="distSlider">
+                <div class="range-labels"><span>0 km</span><span id="distVal"
+                        style="font-weight:600;color:var(--text-main)">5 km</span><span>10 km</span></div>
+                <hr class="filter-sep">
+
+                <div class="filter-title"><i class="fa-solid fa-building text-primary"></i> Room Type</div>
+                <label class="cb-row"><input type="checkbox" checked value="PG"> PG / Hostel</label>
+                <label class="cb-row"><input type="checkbox" checked value="Studio"> Studio Apartment</label>
+                <label class="cb-row"><input type="checkbox" checked value="Apartment"> Full Apartment</label>
+                <label class="cb-row"><input type="checkbox" value="Shared"> Shared Room</label>
+                <hr class="filter-sep">
+
+                <div class="filter-title"><i class="fa-solid fa-venus-mars text-primary"></i> Gender Preference</div>
+                <label class="cb-row"><input type="radio" name="g" value="" checked> Any / Mixed</label>
+                <label class="cb-row"><input type="radio" name="g" value="Boys"> Boys Only</label>
+                <label class="cb-row"><input type="radio" name="g" value="Girls"> Girls Only</label>
+                <hr class="filter-sep">
+
+                <div class="filter-title"><i class="fa-solid fa-wifi text-primary"></i> Amenities</div>
+                <label class="cb-row"><input type="checkbox" checked> Wi-Fi</label>
+                <label class="cb-row"><input type="checkbox" checked> Air Conditioning</label>
+                <label class="cb-row"><input type="checkbox"> Food Included</label>
+                <label class="cb-row"><input type="checkbox"> 24x7 Security</label>
+                <label class="cb-row"><input type="checkbox"> Gym Access</label>
+                <label class="cb-row"><input type="checkbox"> Laundry</label>
+                <hr class="filter-sep">
+
+                <div class="filter-title"><i class="fa-solid fa-star text-primary"></i> Min Rating</div>
+                <div class="chip-row">
+                    <div class="chip active">Any</div>
+                    <div class="chip">3+</div>
+                    <div class="chip">4+</div>
+                    <div class="chip">4.5+</div>
+                </div>
+
+                <button class="btn btn-primary w-full mt-6" onclick="filterAndRender()"><i
+                        class="fa-solid fa-filter"></i> Apply Filters</button>
+            </aside>
+
+            <main>
+                <div class="active-filters" id="activeFilters"></div>
+                <div class="results-header">
+                    <div>Showing <strong id="resultCount">8</strong> properties <span class="text-muted"
+                            style="font-size:0.875rem">near your campus</span></div>
+                    <div class="flex items-center gap-3">
+                        <select class="form-control" style="width:auto;padding:0.4rem 0.75rem;font-size:0.875rem"
+                            id="sortSel" onchange="filterAndRender()">
+                            <option value="match">AI Match (High → Low)</option>
+                            <option value="price_asc">Price (Low → High)</option>
+                            <option value="price_desc">Price (High → Low)</option>
+                            <option value="rating">Top Rated</option>
+                        </select>
+                        <div class="view-toggle">
+                            <button class="view-btn active" id="gridBtn" onclick="setView('grid')"><i
+                                    class="fa-solid fa-grip"></i></button>
+                            <button class="view-btn" id="listBtn" onclick="setView('list')"><i
+                                    class="fa-solid fa-list"></i></button>
+                            <button class="view-btn" id="mapBtn" onclick="setView('map')"><i
+                                    class="fa-solid fa-map"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="propertyOutput" class="prop-grid"></div>
+                <div id="map"></div>
+
+                <div class="text-center mt-8">
+                    <button class="btn btn-outline" style="padding:0.75rem 2.5rem"
+                        onclick="showToast('info','Loading 8 more properties...')">Load More Listings</button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 CampusNest Technologies Pvt. Ltd.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="app.js"></script>
+    <script>
+        let currentView = 'grid';
+        function setView(v) {
+            currentView = v;
+            document.getElementById('gridBtn').classList.toggle('active', v === 'grid');
+            document.getElementById('listBtn').classList.toggle('active', v === 'list');
+            document.getElementById('mapBtn').classList.toggle('active', v === 'map');
+            document.getElementById('map').style.display = v === 'map' ? 'block' : 'none';
+            document.getElementById('propertyOutput').style.display = v === 'map' ? 'none' : '';
+            document.getElementById('propertyOutput').className = v === 'list' ? 'prop-list' : 'prop-grid';
+            if (v === 'map' && !window._mapInit) initMap();
+        }
+        function initMap() {
+            window._mapInit = true;
+            const map = L.map('map').setView([28.6139, 77.209], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OSM contributors' }).addTo(map);
+            window.PROPERTIES.forEach(p => {
+                if (p.lat && p.lng) L.marker([p.lat, p.lng]).addTo(map).bindPopup(`<b>${p.title}</b><br>₹${p.price.toLocaleString()}/mo`);
+            });
+        }
+        function clearFilters() { document.getElementById('activeFilters').innerHTML = ''; filterAndRender(); showToast('info', 'Filters cleared'); }
+        document.getElementById('distSlider').addEventListener('input', function () { document.getElementById('distVal').innerText = this.value + ' km'; });
+        filterAndRender();
+    </script>
+</body>
+
+</html>

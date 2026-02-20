@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Login — CampusNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background: var(--bg-color);
+        }
+
+        .auth-page {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 100vh;
+        }
+
+        .auth-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .auth-right {
+            background: linear-gradient(145deg, #1e1b4b 0%, #312e81 50%, #1d4ed8 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-right::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+
+        .auth-right::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.15), transparent);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+
+        .auth-right .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .role-card {
+            padding: 1.25rem 1rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .role-card:hover {
+            border-color: var(--primary);
+        }
+
+        .role-card.selected {
+            border-color: var(--primary);
+            background: rgba(79, 70, 229, 0.06);
+        }
+
+        .role-card i {
+            font-size: 1.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .role-card.selected i {
+            color: var(--primary);
+        }
+
+        .role-card .role-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .social-auth {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .social-auth-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.7rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            background: var(--surface);
+            color: var(--text-main);
+            transition: var(--transition);
+        }
+
+        .social-auth-btn:hover {
+            border-color: var(--primary);
+            background: rgba(79, 70, 229, 0.04);
+        }
+
+        .tabs-auth {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .tab-auth {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-bottom: 2.5px solid transparent;
+            margin-bottom: -2px;
+            transition: var(--transition);
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            font-family: inherit;
+        }
+
+        .tab-auth.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .testimonial-carousel {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            text-align: left;
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .tc-stars {
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        @media(max-width:768px) {
+            .auth-page {
+                grid-template-columns: 1fr;
+            }
+
+            .auth-right {
+                display: none;
+            }
+
+            .auth-left {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="auth-page">
+        <div class="auth-left">
+            <a href="index.html" class="nav-brand mb-6"><i class="fa-solid fa-house-chimney-window"></i> CampusNest</a>
+
+            <div class="tabs-auth">
+                <button class="tab-auth active" id="tabSignup" onclick="showAuth('signup')">Create Account</button>
+                <button class="tab-auth" id="tabLogin" onclick="showAuth('login')">Log In</button>
+            </div>
+
+            <!-- SIGNUP -->
+            <div id="signupForm">
+                <h2 style="font-size:1.75rem;margin-bottom:0.5rem">Join CampusNest</h2>
+                <p class="text-muted text-sm mb-4">Find your verified home near campus — broker-free.</p>
+
+                <div class="role-grid mb-4">
+                    <div class="role-card selected" onclick="selectRole(this)"><i
+                            class="fa-solid fa-graduation-cap"></i>
+                        <div class="role-name">Student</div>
+                    </div>
+                    <div class="role-card" onclick="selectRole(this)"><i class="fa-solid fa-chalkboard-user"></i>
+                        <div class="role-name">Faculty</div>
+                    </div>
+                    <div class="role-card" onclick="selectRole(this)"><i class="fa-solid fa-key"></i>
+                        <div class="role-name">Property Owner</div>
+                    </div>
+                    <div class="role-card" onclick="selectRole(this)"><i class="fa-solid fa-building"></i>
+                        <div class="role-name">PG Operator</div>
+                    </div>
+                </div>
+
+                <div class="social-auth mb-4">
+                    <button class="social-auth-btn" onclick="showToast('info','Google sign-up initiated...')"><img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18"
+                            alt="G"> Google</button>
+                    <button class="social-auth-btn" onclick="showToast('info','LinkedIn sign-up initiated...')"><i
+                            class="fa-brands fa-linkedin" style="color:#0077B5;font-size:1.1rem"></i> LinkedIn</button>
+                </div>
+
+                <div class="divider">or with email</div>
+
+                <form onsubmit="handleSignup(event)">
+                    <div class="grid grid-2 gap-4">
+                        <div class="form-group"><label class="form-label">First Name</label><input class="form-control"
+                                placeholder="John" required></div>
+                        <div class="form-group"><label class="form-label">Last Name</label><input class="form-control"
+                                placeholder="Doe" required></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">University / Institution</label><input
+                            class="form-control" placeholder="e.g. LPU, Delhi University" required></div>
+                    <div class="form-group"><label class="form-label">Email Address</label>
+                        <div class="input-group"><i class="fa-solid fa-envelope input-icon"></i><input
+                                class="form-control" type="email" placeholder="you@university.edu" required
+                                style="padding-left:2.75rem"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Password</label>
+                        <div class="input-group"><i class="fa-solid fa-lock input-icon"></i><input class="form-control"
+                                type="password" placeholder="••••••••" required style="padding-left:2.75rem"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-full mt-2">Create My Account <i
+                            class="fa-solid fa-arrow-right"></i></button>
+                    <p class="text-center text-muted mt-3 text-sm">By signing up you agree to our <a href="#"
+                            class="text-primary">Terms</a> and <a href="#" class="text-primary">Privacy Policy</a>.</p>
+                </form>
+            </div>
+
+            <!-- LOGIN -->
+            <div id="loginForm" style="display:none">
+                <h2 style="font-size:1.75rem;margin-bottom:0.5rem">Welcome Back</h2>
+                <p class="text-muted text-sm mb-6">Log in to access your AI-powered dashboard.</p>
+
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group"><label class="form-label">Email</label>
+                        <div class="input-group"><i class="fa-solid fa-envelope input-icon"></i><input
+                                class="form-control" type="email" placeholder="you@university.edu" required
+                                style="padding-left:2.75rem"></div>
+                    </div>
+                    <div class="form-group"><label class="form-label">Password</label>
+                        <div class="input-group"><i class="fa-solid fa-lock input-icon"></i><input class="form-control"
+                                type="password" placeholder="••••••••" required style="padding-left:2.75rem"></div>
+                        <div class="text-right mt-1"><a href="#" class="text-primary text-sm">Forgot password?</a></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-full mt-2">Log In</button>
+                </form>
+
+                <div class="divider">or</div>
+                <div class="social-auth">
+                    <button class="social-auth-btn" onclick="showToast('info','Google login initiated...')"><img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18"
+                            alt="G"> Google</button>
+                    <button class="social-auth-btn" onclick="showToast('info','LinkedIn login initiated...')"><i
+                            class="fa-brands fa-linkedin" style="color:#0077B5;font-size:1.1rem"></i> LinkedIn</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="auth-right">
+            <div class="content">
+                <h2 style="color:white;font-size:2.5rem;margin-bottom:1rem">Your Campus Home Awaits</h2>
+                <p style="color:rgba(255,255,255,0.75);margin-bottom:3rem;font-size:1rem;line-height:1.7">Join 12,000+
+                    students who found safe, verified accommodation near campus without a single broker fee.</p>
+                <div class="testimonial-carousel">
+                    <div class="tc-stars">★★★★★</div>
+                    <p style="color:rgba(255,255,255,0.9);line-height:1.7;margin-bottom:1.5rem">"Found my perfect PG in
+                        15 minutes via AI match. The digital agreement protected me completely. Zero broker drama!"</p>
+                    <div class="flex items-center gap-3">
+                        <img src="https://i.pravatar.cc/80?img=5"
+                            style="width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.3)">
+                        <div>
+                            <div style="color:white;font-weight:600">Priya Singh</div>
+                            <div style="color:rgba(255,255,255,0.55);font-size:0.8rem">MBA Student, LPU Jalandhar</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center gap-3 mt-6 flex-wrap"
+                    style="font-size:0.85rem;color:rgba(255,255,255,0.65)">
+                    <span><i class="fa-solid fa-shield-halved" style="color:var(--secondary)"></i> Aadhaar
+                        Verified</span>
+                    <span><i class="fa-solid fa-lock" style="color:var(--secondary)"></i> SSL Secured</span>
+                    <span><i class="fa-solid fa-file-contract" style="color:var(--secondary)"></i> Legal
+                        Agreements</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        function showAuth(mode) {
+            document.getElementById('signupForm').style.display = mode === 'signup' ? 'block' : 'none';
+            document.getElementById('loginForm').style.display = mode === 'login' ? 'block' : 'none';
+            document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
+            document.getElementById('tabLogin').classList.toggle('active', mode === 'login');
+        }
+        function selectRole(el) { document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected')); el.classList.add('selected'); }
+        function handleSignup(e) { e.preventDefault(); showToast('success', 'Account created! Redirecting to your dashboard...'); setTimeout(() => window.location.href = 'dashboard.html', 1500); }
+        function handleLogin(e) { e.preventDefault(); showToast('success', 'Welcome back! Redirecting...'); setTimeout(() => window.location.href = 'dashboard.html', 1500); }
+    </script>
+</body>
+
+</html>

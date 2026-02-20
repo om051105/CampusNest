@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Portal — CampusNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .owner-hero {
+            background: linear-gradient(135deg, #1e1b4b, #3730a3);
+            color: white;
+            padding: 9rem 0 5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .owner-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=1400&q=30') center/cover;
+            opacity: 0.08;
+        }
+
+        .owner-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .pricing-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem 2rem;
+            border: 1.5px solid var(--border-color);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .pricing-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-4px);
+        }
+
+        .pricing-card.popular {
+            border-color: var(--primary);
+        }
+
+        .popular-tag {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 0.3rem 1.25rem;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .price-tag {
+            font-size: 2.8rem;
+            font-weight: 800;
+            font-family: 'Outfit';
+        }
+
+        .pf-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        .pf-item:last-child {
+            border-bottom: none;
+        }
+
+        .pf-item i {
+            width: 18px;
+        }
+
+        .list-form {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .progress-steps {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2.5rem;
+        }
+
+        .ps {
+            flex: 1;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .ps-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--border-color);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: 700;
+        }
+
+        .ps.done .ps-num {
+            background: var(--primary);
+            color: white;
+        }
+
+        .ps.active .ps-num {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+        }
+
+        @media(max-width:900px) {
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="toast-container" id="toastContainer"></div>
+    <nav class="navbar" id="navbar">
+        <div class="container flex justify-between items-center">
+            <a href="index.html" class="nav-brand"><i class="fa-solid fa-house-chimney-window"></i> CampusNest <span
+                    class="badge badge-primary" style="font-size:0.7rem;margin-left:0.3rem">For Owners</span></a>
+            <ul class="nav-links hide-md">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="listings.html" class="nav-link">Browse</a></li>
+                <li><a href="owner.html" class="nav-link active">List Property</a></li>
+            </ul>
+            <div class="flex items-center gap-3">
+                <button class="dark-toggle" id="darkToggle">
+                    <div class="toggle-thumb"></div>
+                </button>
+                <a href="auth.html" class="btn btn-outline btn-sm">Owner Login</a>
+                <a href="auth.html" class="btn btn-primary btn-sm">Get Started Free</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="owner-hero">
+        <div class="container">
+            <span class="badge badge-secondary mb-4" style="font-size:0.875rem"><i
+                    class="fa-solid fa-shield-halved"></i> Zero Brokerage • Owner Verified</span>
+            <h1 style="font-size:3.5rem;margin-bottom:1rem">Rent Smarter.<br>Earn More.</h1>
+            <p style="font-size:1.2rem;opacity:0.85;max-width:600px;margin:0 auto 2.5rem">List your property on India's
+                most trusted campus rental platform. Our AI fills your vacancies 3x faster than traditional methods.</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="#list-form" class="btn btn-lg"
+                    style="background:white;color:var(--primary);font-weight:700">List My Property <i
+                        class="fa-solid fa-arrow-right"></i></a>
+                <a href="#pricing" class="btn btn-lg"
+                    style="background:rgba(255,255,255,0.12);color:white;border:1px solid rgba(255,255,255,0.25)">View
+                    Pricing</a>
+            </div>
+            <div class="flex justify-center gap-8 mt-8 flex-wrap" style="opacity:0.85">
+                <div>
+                    <div style="font-size:2rem;font-weight:800;font-family:'Outfit'">₹0</div>
+                    <div style="font-size:0.85rem">Broker Fees</div>
+                </div>
+                <div>
+                    <div style="font-size:2rem;font-weight:800;font-family:'Outfit'">3x</div>
+                    <div style="font-size:0.85rem">Faster Filling</div>
+                </div>
+                <div>
+                    <div style="font-size:2rem;font-weight:800;font-family:'Outfit'">5K+</div>
+                    <div style="font-size:0.85rem">Student Tenants</div>
+                </div>
+                <div>
+                    <div style="font-size:2rem;font-weight:800;font-family:'Outfit'">95%</div>
+                    <div style="font-size:0.85rem">Occupancy Rate</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Why List -->
+    <section class="section container">
+        <div class="text-center mb-8">
+            <h2 class="section-title">Why Top Landlords Choose Us</h2>
+        </div>
+        <div class="grid grid-3 gap-6">
+            <div class="card card-hover">
+                <div class="badge badge-primary mb-4"
+                    style="font-size:1.5rem;padding:1rem;border-radius:var(--radius-md)"><i
+                        class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3 class="mb-2">AI Lead Matching</h3>
+                <p class="text-muted">Stop answering 100 calls. Our AI scores each inquiry and only routes you highly
+                    matched student tenants.</p>
+            </div>
+            <div class="card card-hover">
+                <div class="badge badge-secondary mb-4"
+                    style="font-size:1.5rem;padding:1rem;border-radius:var(--radius-md)"><i
+                        class="fa-solid fa-file-contract"></i></div>
+                <h3 class="mb-2">Digital Agreements</h3>
+                <p class="text-muted">Generate, sign, and store legally binding e-stamp agreements. Rent collection via
+                    secure escrow.</p>
+            </div>
+            <div class="card card-hover">
+                <div class="badge badge-accent mb-4"
+                    style="font-size:1.5rem;padding:1rem;border-radius:var(--radius-md)"><i
+                        class="fa-solid fa-chart-line"></i></div>
+                <h3 class="mb-2">Owner Analytics</h3>
+                <p class="text-muted">Real-time dashboard: views, inquiries, occupancy, peak demand alerts, and price
+                    optimization suggestions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="section" style="background:var(--surface-2)">
+        <div class="container">
+            <div class="text-center mb-8">
+                <h2 class="section-title">Transparent Pricing</h2>
+                <p class="section-subtitle">Flexible plans for individual owners and large-scale PG operators.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="mb-2">Basic</h3>
+                    <div class="price-tag">Free</div>
+                    <p class="text-muted text-sm mb-4">Try out the platform</p>
+                    <ul>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Up to 3 Listings</li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Basic AI Matching</li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Direct Chat</li>
+                        <li class="pf-item" style="opacity:0.45"><i class="fa-solid fa-xmark text-danger"></i> Digital
+                            Agreements</li>
+                        <li class="pf-item" style="opacity:0.45"><i class="fa-solid fa-xmark text-danger"></i> Analytics
+                            Dashboard</li>
+                    </ul>
+                    <a href="auth.html" class="btn btn-outline w-full mt-6">Get Started Free</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-tag">⭐ Most Popular</div>
+                    <h3 class="mb-2">Premium</h3>
+                    <div class="price-tag text-primary">₹499<span
+                            style="font-size:1rem;color:var(--text-muted);font-weight:400">/mo</span></div>
+                    <p class="text-muted text-sm mb-4">For serious landlords</p>
+                    <ul>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Unlimited Listings</li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Top Search Placement</li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Priority AI Lead Routing
+                        </li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> 10 Digital Agreements/mo
+                        </li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Full Analytics Dashboard
+                        </li>
+                    </ul>
+                    <a href="auth.html" class="btn btn-primary w-full mt-6">Subscribe Premium</a>
+                </div>
+                <div class="pricing-card">
+                    <h3 class="mb-2">Pay-per-Lease</h3>
+                    <div class="price-tag">0.5%<span style="font-size:1rem;color:var(--text-muted);font-weight:400">
+                            commission</span></div>
+                    <p class="text-muted text-sm mb-4">Only pay on success</p>
+                    <ul>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Premium Visibility</li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Full Dashboard</li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Dedicated Account Manager
+                        </li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Rent Automation</li>
+                        <li class="pf-item"><i class="fa-solid fa-check text-secondary"></i> Zero upfront cost</li>
+                    </ul>
+                    <a href="auth.html" class="btn btn-outline w-full mt-6">Talk to Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- List Property Form -->
+    <section id="list-form" class="section container">
+        <div style="max-width:750px;margin:0 auto">
+            <div class="text-center mb-8">
+                <h2 class="section-title">List Your Property in Minutes</h2>
+            </div>
+            <div class="list-form">
+                <div class="progress-steps mb-6">
+                    <div class="ps done">
+                        <div class="ps-num"><i class="fa-solid fa-check" style="font-size:0.75rem"></i></div>Account
+                    </div>
+                    <div class="ps active">
+                        <div class="ps-num">2</div>Property
+                    </div>
+                    <div class="ps">
+                        <div class="ps-num">3</div>Photos
+                    </div>
+                    <div class="ps">
+                        <div class="ps-num">4</div>Pricing
+                    </div>
+                </div>
+                <div class="grid grid-2 gap-4">
+                    <div class="form-group"><label class="form-label">Property Title</label><input class="form-control"
+                            placeholder="e.g. Cozy Studio Near IIT Delhi"></div>
+                    <div class="form-group"><label class="form-label">Property Type</label><select class="form-control">
+                            <option>PG / Hostel</option>
+                            <option>Studio</option>
+                            <option>1 BHK</option>
+                            <option>2 BHK</option>
+                        </select></div>
+                    <div class="form-group"><label class="form-label">Monthly Rent (₹)</label><input
+                            class="form-control" type="number" placeholder="8500"></div>
+                    <div class="form-group"><label class="form-label">Security Deposit (₹)</label><input
+                            class="form-control" type="number" placeholder="17000"></div>
+                    <div class="form-group"><label class="form-label">Nearest University</label><input
+                            class="form-control" placeholder="e.g. IIT Delhi, LPU..."></div>
+                    <div class="form-group"><label class="form-label">Distance from Campus</label><input
+                            class="form-control" placeholder="e.g. 0.5 km"></div>
+                </div>
+                <div class="form-group"><label class="form-label">Full Address</label><input class="form-control"
+                        placeholder="Street, Area, City, PIN code"></div>
+                <div class="form-group"><label class="form-label">Description</label><textarea class="form-control"
+                        placeholder="Describe your property: furnishings, security, rules..."></textarea></div>
+                <div class="form-group">
+                    <label class="form-label">Amenities (select all that apply)</label>
+                    <div class="chip-row">
+                        <div class="chip active">WiFi</div>
+                        <div class="chip active">AC</div>
+                        <div class="chip">Food</div>
+                        <div class="chip">Gym</div>
+                        <div class="chip">Laundry</div>
+                        <div class="chip active">CCTV</div>
+                        <div class="chip">Parking</div>
+                        <div class="chip">Power Backup</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg w-full mt-4"
+                    onclick="showToast('success','Property submitted! Our team will verify within 24 hours.')"><i
+                        class="fa-solid fa-upload"></i> Submit for Verification</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 CampusNest Technologies Pvt. Ltd.</p>
+            </div>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+    <script>
+        document.querySelectorAll('.chip').forEach(c => c.addEventListener('click', () => c.classList.toggle('active')));
+    </script>
+</body>
+
+</html>

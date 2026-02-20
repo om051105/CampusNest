@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Studio — CampusNest</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .top-bar {
+            height: 76px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 0.75rem;
+            height: 460px;
+            margin-bottom: 2rem;
+            cursor: pointer;
+        }
+
+        .gallery-main {
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .gallery-main img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-main:hover img {
+            transform: scale(1.04);
+        }
+
+        .gallery-side {
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .gallery-side div {
+            border-radius: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .gallery-side div:last-child {
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+        }
+
+        .gallery-side img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .gallery-side div:hover img {
+            transform: scale(1.06);
+        }
+
+        .see-all-btn {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+
+        .detail-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+        }
+
+        .sticky-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-xl);
+            padding: 2rem;
+            position: sticky;
+            top: 90px;
+        }
+
+        .price-big {
+            font-family: 'Outfit';
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .ai-score-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(16, 185, 129, 0.08));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .score-ring {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) calc(96%*3.6deg), var(--border-color) 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1rem;
+            font-family: 'Outfit';
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .score-ring::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            background: var(--surface);
+            border-radius: 50%;
+        }
+
+        .score-ring span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .amenity-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .amenity-chip {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            font-size: 0.875rem;
+        }
+
+        .amenity-chip i {
+            color: var(--primary);
+            width: 18px;
+        }
+
+        .reviews-section {
+            margin-top: 3rem;
+        }
+
+        .rating-summary {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .rating-big {
+            font-size: 3.5rem;
+            font-weight: 800;
+            font-family: 'Outfit';
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        .rating-bars .rb {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+            font-size: 0.8rem;
+        }
+
+        .rating-bar-track {
+            flex: 1;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .rating-bar-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+
+        .review-card {
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .reviewer-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 9000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .lightbox.open {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-height: 85vh;
+            max-width: 90vw;
+            object-fit: contain;
+            border-radius: var(--radius-lg);
+        }
+
+        .lb-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        @media(max-width:900px) {
+            .gallery {
+                grid-template-columns: 1fr;
+                height: 280px;
+            }
+
+            .gallery-side {
+                display: none;
+            }
+
+            .detail-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sticky-card {
+                position: static;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-bar"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <nav class="navbar scrolled" id="navbar" style="background:var(--surface);">
+        <div class="container flex justify-between items-center">
+            <a href="index.html" class="nav-brand"><i class="fa-solid fa-house-chimney-window"></i> CampusNest</a>
+            <div class="flex items-center gap-4">
+                <a href="listings.html" class="btn btn-outline btn-sm"><i class="fa-solid fa-arrow-left"></i> Back to
+                    Listings</a>
+                <button class="dark-toggle" id="darkToggle">
+                    <div class="toggle-thumb"></div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="padding-top:2rem">
+        <!-- Breadcrumb -->
+        <div class="text-muted text-sm mb-3" style="display:flex;align-items:center;gap:0.4rem">
+            <a href="index.html" class="text-primary">Home</a> <i class="fa-solid fa-chevron-right"
+                style="font-size:0.7rem"></i>
+            <a href="listings.html" class="text-primary">Search</a> <i class="fa-solid fa-chevron-right"
+                style="font-size:0.7rem"></i>
+            <span>Luxury Studio Near Campus</span>
+        </div>
+
+        <div class="flex justify-between items-start mb-4 flex-wrap gap-2">
+            <div>
+                <div class="flex gap-2 mb-2"><span class="badge badge-secondary"><i
+                            class="fa-solid fa-circle-check"></i> Verified Owner</span><span
+                        class="badge badge-primary"><i class="fa-solid fa-award"></i> Top Rated</span></div>
+                <h1 style="font-size:2rem;margin-bottom:0.4rem">Luxury Studio Near Campus Main Gate</h1>
+                <p class="text-muted"><i class="fa-solid fa-location-dot"></i> 45 University Road, Scheme 54 &bull; 0.5
+                    km from Campus</p>
+            </div>
+            <div class="flex gap-2">
+                <button class="btn btn-outline btn-sm" onclick="showToast('info','Link copied to clipboard!')"><i
+                        class="fa-solid fa-share-nodes"></i> Share</button>
+                <button class="btn btn-outline btn-sm" id="wishlistBtn" onclick="toggleWishlist()"><i
+                        class="fa-regular fa-heart"></i> Save</button>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="gallery" onclick="openLightbox()">
+            <div class="gallery-main"><img
+                    src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80"
+                    alt="Main"></div>
+            <div class="gallery-side">
+                <div><img
+                        src="https://images.unsplash.com/photo-1502672260266-1c1e52409802?auto=format&fit=crop&w=500&q=80"
+                        alt="Bedroom"></div>
+                <div><img
+                        src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=500&q=80"
+                        alt="Kitchen"><button class="see-all-btn"><i class="fa-solid fa-images"></i> See all
+                        photos</button></div>
+            </div>
+        </div>
+
+        <!-- Lightbox -->
+        <div class="lightbox" id="lightbox">
+            <button class="lb-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
+            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
+                alt="Gallery">
+        </div>
+
+        <!-- Detail Layout -->
+        <div class="detail-layout">
+            <div>
+                <!-- AI Score -->
+                <div class="ai-score-bar">
+                    <div class="score-ring"><span>96%</span></div>
+                    <div>
+                        <h3 style="font-size:1.2rem;margin-bottom:0.25rem">🎯 Near-Perfect AI Match!</h3>
+                        <p class="text-muted text-sm">Based on your preferences: Studio • ≤1 km • WiFi + AC • ₹5k–12k
+                            budget</p>
+                        <div class="flex gap-2 mt-2 flex-wrap">
+                            <span class="badge badge-secondary">✓ Distance</span>
+                            <span class="badge badge-secondary">✓ Budget</span>
+                            <span class="badge badge-secondary">✓ Amenities</span>
+                            <span class="badge badge-primary">✓ Room Type</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
+                    <button class="tab-btn" onclick="switchTab('amenities',this)">Amenities</button>
+                    <button class="tab-btn" onclick="switchTab('reviews',this)">Reviews (43)</button>
+                </div>
+
+                <div id="tab-overview" class="tab-content active">
+                    <p class="text-muted" style="line-height:1.8;margin-bottom:1.5rem">Premium fully-furnished studio
+                        apartment tailored for students and visiting faculty. Located in a safe gated community, just 5
+                        min walk from the university main gate. Includes daily housekeeping, high-speed internet, 24x7
+                        power backup, and dedicated study desk.</p>
+                    <div class="grid grid-2 gap-4">
+                        <div class="card" style="padding:1.25rem">
+                            <div class="text-muted text-sm mb-1">Property Type</div>
+                            <div class="font-bold">Studio Apartment</div>
+                        </div>
+                        <div class="card" style="padding:1.25rem">
+                            <div class="text-muted text-sm mb-1">Available From</div>
+                            <div class="font-bold">March 1, 2026</div>
+                        </div>
+                        <div class="card" style="padding:1.25rem">
+                            <div class="text-muted text-sm mb-1">Furnishing</div>
+                            <div class="font-bold">Fully Furnished</div>
+                        </div>
+                        <div class="card" style="padding:1.25rem">
+                            <div class="text-muted text-sm mb-1">Gender Preference</div>
+                            <div class="font-bold">Any (Mixed)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-amenities" class="tab-content">
+                    <div class="amenity-grid">
+                        <div class="amenity-chip"><i class="fa-solid fa-wifi"></i> 100 Mbps WiFi</div>
+                        <div class="amenity-chip"><i class="fa-solid fa-snowflake"></i> Air Conditioning</div>
+                        <div class="amenity-chip"><i class="fa-solid fa-bolt"></i> 24x7 Power Backup</div>
+                        <div class="amenity-chip"><i class="fa-solid fa-bed"></i> Fully Furnished</div>
+                        <div class="amenity-chip"><i class="fa-solid fa-shield-halved"></i> CCTV Security</div>
+                        <div class="amenity-chip"><i class="fa-solid fa-utensils"></i> Kitchenette</div>
+                        <div class="amenity-chip"><i class="fa-solid fa-car"></i> parking Included</div>
+                        <div class="amenity-chip"><i class="fa-solid fa-broom"></i> Daily Housekeeping</div>
+                    </div>
+                </div>
+
+                <div id="tab-reviews" class="tab-content reviews-section" style="padding-top:0">
+                    <div class="rating-summary">
+                        <div>
+                            <div class="rating-big">4.8</div>
+                            <div class="stars">★★★★★</div>
+                            <div class="text-muted text-sm">43 reviews</div>
+                        </div>
+                        <div class="rating-bars flex-1">
+                            <div class="rb"><span style="width:14px">5</span>
+                                <div class="rating-bar-track">
+                                    <div class="rating-bar-fill" style="width:80%"></div>
+                                </div><span>34</span>
+                            </div>
+                            <div class="rb"><span style="width:14px">4</span>
+                                <div class="rating-bar-track">
+                                    <div class="rating-bar-fill" style="width:15%"></div>
+                                </div><span>6</span>
+                            </div>
+                            <div class="rb"><span style="width:14px">3</span>
+                                <div class="rating-bar-track">
+                                    <div class="rating-bar-fill" style="width:5%"></div>
+                                </div><span>3</span>
+                            </div>
+                            <div class="rb"><span style="width:14px">2</span>
+                                <div class="rating-bar-track">
+                                    <div class="rating-bar-fill" style="width:0%"></div>
+                                </div><span>0</span>
+                            </div>
+                            <div class="rb"><span style="width:14px">1</span>
+                                <div class="rating-bar-track">
+                                    <div class="rating-bar-fill" style="width:0%"></div>
+                                </div><span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-card">
+                        <div class="flex items-center gap-3 mb-2"><img src="https://i.pravatar.cc/80?img=5"
+                                class="reviewer-img">
+                            <div>
+                                <div class="font-semibold">Priya S.</div>
+                                <div class="stars text-sm">★★★★★</div>
+                            </div>
+                        </div>
+                        <p class="text-muted text-sm">"Exactly as described. Clean, furnished, very close to the
+                            library."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="flex items-center gap-3 mb-2"><img src="https://i.pravatar.cc/80?img=11"
+                                class="reviewer-img">
+                            <div>
+                                <div class="font-semibold">Arjun K.</div>
+                                <div class="stars text-sm">★★★★☆</div>
+                            </div>
+                        </div>
+                        <p class="text-muted text-sm">"Great location and owner is very responsive. WiFi speed is
+                            excellent."</p>
+                    </div>
+                    <!-- Review Form -->
+                    <div class="card mt-4">
+                        <h4 class="mb-4">Leave a Review</h4>
+                        <div class="stars mb-3" style="font-size:1.5rem;cursor:pointer" id="starPicker">☆☆☆☆☆</div>
+                        <textarea class="form-control mb-3" placeholder="Share your experience..."></textarea><button
+                            class="btn btn-primary btn-sm"
+                            onclick="showToast('success','Review submitted! Thank you.')">Submit Review</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Sticky Card -->
+            <div>
+                <div class="sticky-card">
+                    <div class="price-big">₹8,500 <span
+                            style="font-size:1rem;color:var(--text-muted);font-weight:400">/month</span></div>
+                    <p class="text-muted text-sm mb-4">+ ₹17,000 security deposit (refundable)</p>
+
+                    <div class="form-group">
+                        <label class="form-label">Move-in Date</label>
+                        <input type="date" class="form-control" min="2026-03-01" value="2026-03-01">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Stay Duration</label>
+                        <select class="form-control">
+                            <option>3 months</option>
+                            <option selected>6 months</option>
+                            <option>12 months</option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary w-full mb-3"
+                        onclick="showToast('success','Booking request sent! Owner will respond within 2 hours.')">Request
+                        to Book</button>
+                    <button class="btn btn-outline w-full mb-4"
+                        onclick="showToast('info','Opening WhatsApp chat...')"><i class="fa-brands fa-whatsapp"
+                            style="color:#25D366"></i> Chat on WhatsApp</button>
+
+                    <div class="divider">or</div>
+
+                    <button class="btn w-full"
+                        style="border:1.5px solid var(--primary);color:var(--primary);background:rgba(79,70,229,0.05)"
+                        onclick="showToast('success','Digital Agreement generated! Check your email.')"><i
+                            class="fa-solid fa-file-signature"></i> Generate Digital Agreement</button>
+
+                    <div
+                        style="background:var(--surface-2);border-radius:var(--radius-md);padding:1rem;margin-top:1.5rem;font-size:0.8rem;color:var(--text-muted)">
+                        <i class="fa-solid fa-shield-halved text-secondary mr-2"></i> Booking is protected by
+                        CampusNest's Secure Escrow. Your advance is held safely until you move in.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 CampusNest Technologies Pvt. Ltd.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        function switchTab(id, btn) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            btn.classList.add('active');
+        }
+        function openLightbox() { document.getElementById('lightbox').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+        function toggleWishlist() {
+            const btn = document.getElementById('wishlistBtn');
+            const saved = btn.innerHTML.includes('fa-regular');
+            btn.innerHTML = saved ? '<i class="fa-solid fa-heart" style="color:var(--danger)"></i> Saved!' : '<i class="fa-regular fa-heart"></i> Save';
+            showToast(saved ? 'success' : 'info', saved ? 'Added to saved properties!' : 'Removed from saved.');
+        }
+        // Star picker
+        const stars = document.getElementById('starPicker');
+        if (stars) {
+            const allStars = ['☆', '☆', '☆', '☆', '☆'];
+            stars.addEventListener('mouseover', e => {
+                const idx = Array.from(stars.children || []).indexOf(e.target);
+            });
+            let rating = 0;
+            stars.addEventListener('click', function (e) {
+                const chars = '★★★★★☆☆☆☆☆';
+                rating = Math.round((e.clientX - stars.getBoundingClientRect().left) / (stars.offsetWidth / 5)) + 1;
+                if (rating < 1) rating = 1; if (rating > 5) rating = 5;
+                stars.textContent = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+            });
+        }
+    </script>
+</body>
+
+</html>
