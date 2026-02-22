@@ -1,6 +1,6 @@
-// ==================== CAMPUSNEST APP.JS ====================
 
-// ---- Data ----
+
+
 window.PROPERTIES = [
     { id: 1, title: 'Luxury 1BHK - Lawgate North', price: 8500, distance: 0.5, distLabel: '0.5 km', type: '1BHK / 2BHK', gender: 'Mixed', match: 98, rating: 4.8, reviews: 43, locality: 'Lawgate - North', lat: 31.2570, lng: 75.7060, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Power Backup', 'Furnished'] },
     { id: 2, title: 'Cozy PG for Girls - Greenvalley', price: 6500, distance: 1.2, distLabel: '1.2 km', type: 'PG', gender: 'Girls', match: 92, rating: 4.6, reviews: 28, locality: 'Greenvalley', lat: 31.2520, lng: 75.7010, img: 'https://images.unsplash.com/photo-1502672260266-1c1e52409802?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Food', 'CCTV', 'Laundry'] },
@@ -14,7 +14,7 @@ window.PROPERTIES = [
 
 let wishlist = new Set();
 
-// ---- Render ----
+
 function renderProperties(props, container) {
     if (!container) return;
     if (!props || props.length === 0) {
@@ -55,7 +55,7 @@ function toggleWish(id, btn) {
     else { wishlist.add(id); btn.classList.add('active'); btn.innerHTML = '<i class="fa-solid fa-heart" style="color:var(--danger)"></i>'; showToast('success', 'Saved to Wishlist!'); }
 }
 
-// ---- Filter & Sort (for listings page) ----
+
 function filterAndRender() {
     const search = (document.getElementById('searchInput')?.value || '');
     const budgetSel = document.getElementById('budgetSel')?.value || '';
@@ -87,7 +87,7 @@ function filterAndRender() {
     renderProperties(results, output);
 }
 
-// ---- Toast ----
+
 function showToast(type, msg) {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -100,7 +100,7 @@ function showToast(type, msg) {
     setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateX(20px)'; toast.style.transition = 'all 0.3s'; setTimeout(() => toast.remove(), 300); }, 3500);
 }
 
-// ---- Dark Mode ----
+
 function initDarkMode() {
     const btn = document.getElementById('darkToggle');
     if (!btn) return;
@@ -112,14 +112,14 @@ function initDarkMode() {
     });
 }
 
-// ---- Navbar scroll ----
+
 function initNavbar() {
     const nav = document.getElementById('navbar');
     if (!nav) return;
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
 }
 
-// ---- Scroll Progress ----
+
 function initScrollProgress() {
     const bar = document.getElementById('scrollProgress');
     if (!bar) return;
@@ -129,7 +129,7 @@ function initScrollProgress() {
     });
 }
 
-// ---- Counter Animation ----
+
 function initCounters() {
     const counters = document.querySelectorAll('.counter');
     if (!counters.length) return;
@@ -153,7 +153,7 @@ function initCounters() {
     counters.forEach(c => io.observe(c));
 }
 
-// ---- IntersectionObserver for fade-in-up ----
+
 function initAnimations() {
     const els = document.querySelectorAll('.fade-in-up');
     const io = new IntersectionObserver((entries) => {
@@ -162,7 +162,7 @@ function initAnimations() {
     els.forEach(el => { el.style.animationPlayState = 'paused'; io.observe(el); });
 }
 
-// ---- Category chip filter (index page) ----
+
 function initCategoryChips() {
     const chips = document.querySelectorAll('#categoryChips .chip');
     chips.forEach(c => c.addEventListener('click', () => {
@@ -174,7 +174,7 @@ function initCategoryChips() {
     }));
 }
 
-// ---- INIT ----
+
 document.addEventListener('DOMContentLoaded', () => {
     initDarkMode();
     initNavbar();
@@ -183,15 +183,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimations();
     initCategoryChips();
 
-    // Render on homepage
+    
     const grid = document.getElementById('propertiesGrid');
     if (grid) renderProperties(window.PROPERTIES.slice(0, 6), grid);
 
-    // Render on listings page (initial load)
+    
     const output = document.getElementById('propertyOutput');
     if (output) filterAndRender();
 
-    // Render on dashboard
+    
     const dashGrid = document.getElementById('property-grid');
     if (dashGrid) renderProperties(window.PROPERTIES.slice(0, 4), dashGrid);
 });
