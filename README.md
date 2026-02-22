@@ -1,6 +1,6 @@
 # CampusNest 🏠
 
-> **India's AI-Powered Campus Rental Marketplace** — An MBA capstone project demonstrating a full-stack rental platform for students and faculty.
+> **India's AI-Powered Campus Rental Marketplace** — An MBA capstone project demonstrating a full-stack rental platform specifically for LPU students and faculty.
 
 [![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-4F46E5?style=for-the-badge&logo=github)](https://om051105.github.io/CampusNest/)
 
@@ -8,45 +8,48 @@
 
 ## 🎯 Problem Statement
 
-Finding rental accommodation near educational institutions is fragmented and inefficient. Students and faculty face unverified listings, high broker dependency, and poor transparency.
+Finding rental accommodation near educational institutions is often fragmented, inefficient, and unreliable. Students and faculty face challenges such as unverified listings, incomplete property details, limited filtering options, lack of standardized agreements, poor service transparency, and high broker dependency. 
 
-**CampusNest** solves this with an AI-first, broker-free, verified rental marketplace tailored for academic communities.
+Specific to LPU, students looking for PG accommodations outside the campus face issues finding the right rooms according to their choice, especially regarding better locality, services provided by room rentals, and broker problems. These issues create time constraints, trust gaps, and information asymmetry. 
 
----
-
-## ✨ Key Features
-
-| Feature | Description |
-|---|---|
-| 🤖 AI Match Score | Every listing shows % compatibility based on your profile |
-| 🗺️ Leaflet Map View | Interactive map for geographic property discovery |
-| 📊 Demand Forecasting | AI chart predicting peak rental seasons near your campus |
-| ✅ Verified Listings | Aadhaar + property-doc verified owners with green badge |
-| 📄 Digital Agreements | Generate & download rental agreements in one click |
-| 🌙 Dark Mode | Full dark/light mode with localStorage persistence |
-| ❤️ Wishlist | Save and manage favourite properties |
-| 🔔 Toast Notifications | Real-time action feedback throughout the UI |
+Therefore, there is a need for a centralized, AI-powered platform that provides smart property discovery, verified information, and seamless rental management tailored for academic communities.
 
 ---
 
-## 📄 Pages
+## 🚀 Objectives
 
-- **`index.html`** — Landing Page with hero, stats counter, features, testimonials & CTA
-- **`listings.html`** — Advanced Search with filters, grid/list/map view toggle
-- **`property.html`** — Property Detail with gallery lightbox, tabs, AI score ring, reviews
-- **`dashboard.html`** — Personalized AI Dashboard with KPIs, demand & price charts
-- **`owner.html`** — Owner Portal with pricing plans and property listing form
-- **`auth.html`** — Sign up / Login with role selection and social auth
+### Primary Objective
+To develop an AI-driven rental platform that simplifies, personalizes, and secures accommodation search and management for students and faculty.
+
+### Specific Objectives
+- Provide AI-based smart property recommendations.
+- Ensure verified listings with complete details (photos, pricing, vacancy, services, location).
+- Offer advanced filters (budget ranges: 5k, 5k-6k, 6-7k, 7-8k, 8-9k, 10k+; distance, room type, amenities, gender-specific).
+- Specify LPU localities: Lawgate (Backgate, North, South, West), Greenvalley.
+- Provide essential contact info: Cleaning service, PG owner, Plumbing service, AC service.
+- Enable digital rental agreements and record management.
+- Use AI for demand forecasting during peak seasons.
+- Generate revenue through listing fees, commissions, and premium listings.
+- Improve decision-making via ratings and reviews.
+- Reduce broker dependency and enhance operational efficiency.
 
 ---
 
-## 💰 Revenue Model (MBA Focus)
+## 🔬 Methodology
 
-1. **Free Basic** — Up to 3 listings (user acquisition)
-2. **Premium ₹499/mo** — Unlimited listings + featured + analytics
-3. **Pay-per-Lease 0.5%** — Commission on first month rent (performance model)
-4. **Digital Agreement ₹99** — Per agreement generated
-5. **Featured Listing** — ₹299 to appear at search top
+To solve this problem, we are building a website for students facing issues finding better rooms. Before development, we understood major student issues by:
+1. Creating a customer behavior journey by interviewing students.
+2. Creating an empathy interview and empathy map.
+3. Identifying essential features for the website based on student needs (budget, locality, cleaning service, etc.).
+
+---
+
+## ✨ Expected Outcomes
+
+- **Reduced search time**: Instant AI matching and precise LPU map pins.
+- **Higher occupancy rates**: For owners using the platform.
+- **Transparent and secure rental ecosystem**: Zero broker fees and verified contacts.
+- **Scalable AI-based marketplace model**: Can be pitched to other clients interested in buying the platform.
 
 ---
 
@@ -55,16 +58,16 @@ Finding rental accommodation near educational institutions is fragmented and ine
 - **HTML5, CSS3** (glassmorphism, custom dark mode, animations)
 - **Vanilla JavaScript** (no framework, ES6+)
 - **Chart.js** — Demand forecasting & price analytics
-- **Leaflet.js** — Interactive property map
+- **Leaflet.js** — Interactive LPU property map
 - **Font Awesome 6** — Icons
 - **Google Fonts** — Inter & Outfit
 
 ---
 
-## 🚀 Live Demo
+## 🌐 Live Demo
 
 👉 **[https://om051105.github.io/CampusNest/](https://om051105.github.io/CampusNest/)**
 
 ---
 
-*MBA Project — AI-Driven Rental Platform for Academic Communities*
+*MBA Project — AI-Driven Rental Platform for Academic Communities (LPU Focus)*

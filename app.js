@@ -2,14 +2,14 @@
 
 // ---- Data ----
 window.PROPERTIES = [
-    { id: 1, title: 'Luxury Studio Near Campus Main Gate', price: 8500, distance: 0.5, distLabel: '0.5 km', type: 'Studio', gender: 'Mixed', match: 98, rating: 4.8, reviews: 43, lat: 28.620, lng: 77.212, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Power Backup', 'Furnished'] },
-    { id: 2, title: 'Cozy PG for Girls – Fully Furnished & Secure', price: 6200, distance: 1.2, distLabel: '1.2 km', type: 'PG', gender: 'Girls', match: 92, rating: 4.6, reviews: 28, lat: 28.622, lng: 77.215, img: 'https://images.unsplash.com/photo-1502672260266-1c1e52409802?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Food', 'CCTV', 'Laundry'] },
-    { id: 3, title: 'Spacious 2BHK Shared – Near Science Block', price: 9800, distance: 2.0, distLabel: '2.0 km', type: 'Apartment', gender: 'Boys', match: 85, rating: 4.3, reviews: 15, lat: 28.618, lng: 77.208, img: 'https://images.unsplash.com/photo-1502005097973-ef569427e1ea?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'AC', 'Parking'] },
-    { id: 4, title: 'Premium Studio with Rooftop Gym Access', price: 11000, distance: 0.8, distLabel: '0.8 km', type: 'Studio', gender: 'Mixed', match: 88, rating: 4.7, reviews: 61, lat: 28.621, lng: 77.210, img: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'AC', 'Furnished'] },
-    { id: 5, title: 'Budget PG Boys – Walking Distance', price: 4500, distance: 0.3, distLabel: '0.3 km', type: 'PG', gender: 'Boys', match: 80, rating: 4.0, reviews: 9, lat: 28.619, lng: 77.214, img: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Food'] },
-    { id: 6, title: 'Executive 1BHK – Fully Serviced', price: 15000, distance: 1.5, distLabel: '1.5 km', type: 'Apartment', gender: 'Mixed', match: 75, rating: 4.9, reviews: 37, lat: 28.623, lng: 77.207, img: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Housekeeping', 'Parking'] },
-    { id: 7, title: 'Girls Hostel – High Security Zone', price: 5500, distance: 0.9, distLabel: '0.9 km', type: 'PG', gender: 'Girls', match: 91, rating: 4.5, reviews: 22, lat: 28.617, lng: 77.211, img: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['CCTV', 'Food', 'Laundry', 'WiFi'] },
-    { id: 8, title: 'Trendy Co-Living Space – Mixed', price: 7800, distance: 1.1, distLabel: '1.1 km', type: 'Studio', gender: 'Mixed', match: 83, rating: 4.4, reviews: 55, lat: 28.624, lng: 77.213, img: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'Lounge', 'AC'] },
+    { id: 1, title: 'Luxury Studio - Lawgate North', price: 8500, distance: 0.5, distLabel: '0.5 km', type: 'Studio', gender: 'Mixed', match: 98, rating: 4.8, reviews: 43, locality: 'Lawgate - North', lat: 31.2570, lng: 75.7060, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Power Backup', 'Furnished'] },
+    { id: 2, title: 'Cozy PG for Girls - Greenvalley', price: 6500, distance: 1.2, distLabel: '1.2 km', type: 'PG', gender: 'Girls', match: 92, rating: 4.6, reviews: 28, locality: 'Greenvalley', lat: 31.2520, lng: 75.7010, img: 'https://images.unsplash.com/photo-1502672260266-1c1e52409802?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Food', 'CCTV', 'Laundry'] },
+    { id: 3, title: 'Spacious Shared Room - Lawgate Backgate', price: 5500, distance: 0.2, distLabel: '0.2 km', type: 'Apartment', gender: 'Boys', match: 85, rating: 4.3, reviews: 15, locality: 'Lawgate - Backgate', lat: 31.2580, lng: 75.7040, img: 'https://images.unsplash.com/photo-1502005097973-ef569427e1ea?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Parking'] },
+    { id: 4, title: 'Premium Apartment - Lawgate South', price: 12000, distance: 0.8, distLabel: '0.8 km', type: 'Apartment', gender: 'Mixed', match: 88, rating: 4.7, reviews: 61, locality: 'Lawgate - South', lat: 31.2540, lng: 75.7060, img: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'AC', 'Furnished'] },
+    { id: 5, title: 'Budget PG Boys - Lawgate West', price: 4500, distance: 0.6, distLabel: '0.6 km', type: 'PG', gender: 'Boys', match: 80, rating: 4.0, reviews: 9, locality: 'Lawgate - West', lat: 31.2550, lng: 75.7020, img: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Food'] },
+    { id: 6, title: 'Executive Studio - Greenvalley', price: 7500, distance: 1.5, distLabel: '1.5 km', type: 'Studio', gender: 'Mixed', match: 75, rating: 4.9, reviews: 37, locality: 'Greenvalley', lat: 31.2530, lng: 75.7000, img: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Housekeeping', 'Parking'] },
+    { id: 7, title: 'Girls Hostel - Lawgate North', price: 5500, distance: 0.9, distLabel: '0.9 km', type: 'PG', gender: 'Girls', match: 91, rating: 4.5, reviews: 22, locality: 'Lawgate - North', lat: 31.2565, lng: 75.7070, img: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['CCTV', 'Food', 'Laundry', 'WiFi'] },
+    { id: 8, title: 'Trendy Co-Living - Lawgate South', price: 7800, distance: 1.1, distLabel: '1.1 km', type: 'Studio', gender: 'Mixed', match: 83, rating: 4.4, reviews: 55, locality: 'Lawgate - South', lat: 31.2535, lng: 75.7055, img: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'Lounge', 'AC'] },
 ];
 
 let wishlist = new Set();
@@ -57,15 +57,25 @@ function toggleWish(id, btn) {
 
 // ---- Filter & Sort (for listings page) ----
 function filterAndRender() {
-    const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+    const search = (document.getElementById('searchInput')?.value || '');
+    const budgetSel = document.getElementById('budgetSel')?.value || '';
     const typeSel = document.getElementById('typeSel')?.value || '';
     const sortSel = document.getElementById('sortSel')?.value || 'match';
     const output = document.getElementById('propertyOutput');
     if (!output) return;
 
     let results = [...window.PROPERTIES];
-    if (search) results = results.filter(p => p.title.toLowerCase().includes(search));
-    if (typeSel) results = results.filter(p => p.type === typeSel);
+    if (search) results = results.filter(p => p.locality === search || p.title.toLowerCase().includes(search.toLowerCase()));
+    if (typeSel) results = results.filter(p => p.type === typeSel || (typeSel === 'Shared' && p.type === 'Apartment'));
+
+    if (budgetSel) {
+        const [min, max] = budgetSel.split('-').map(Number);
+        if (max) {
+            results = results.filter(p => p.price >= min && p.price <= max);
+        } else {
+            results = results.filter(p => p.price >= min);
+        }
+    }
 
     if (sortSel === 'price_asc') results.sort((a, b) => a.price - b.price);
     else if (sortSel === 'price_desc') results.sort((a, b) => b.price - a.price);

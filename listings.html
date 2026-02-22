@@ -262,16 +262,26 @@
         <div class="container">
             <h1 style="font-size:2rem;margin-bottom:1rem">Find Your Perfect Stay</h1>
             <div class="search-bar-top">
-                <div class="sf"><i class="fa-solid fa-location-dot"></i><input id="searchInput" type="text"
-                        placeholder="University, area, or landmark..."></div>
+                <div class="sf"><i class="fa-solid fa-location-dot"></i>
+                    <select id="searchInput">
+                        <option value="">Any Locality</option>
+                        <option value="Lawgate - Backgate">Lawgate (Backgate)</option>
+                        <option value="Lawgate - North">Lawgate (North)</option>
+                        <option value="Lawgate - South">Lawgate (South)</option>
+                        <option value="Lawgate - West">Lawgate (West)</option>
+                        <option value="Greenvalley">Greenvalley</option>
+                    </select>
+                </div>
                 <div class="sd"></div>
                 <div class="sf"><i class="fa-solid fa-rupee-sign"></i>
                     <select id="budgetSel">
                         <option value="">Any Budget</option>
-                        <option value="5000">Under ₹5,000</option>
-                        <option value="10000">₹5k - ₹10k</option>
-                        <option value="20000">₹10k - ₹20k</option>
-                        <option value="99999">₹20,000+</option>
+                        <option value="0-5000">Under ₹5,000</option>
+                        <option value="5000-6000">₹5k - ₹6k</option>
+                        <option value="6000-7000">₹6k - ₹7k</option>
+                        <option value="7000-8000">₹7k - ₹8k</option>
+                        <option value="8000-9000">₹8k - ₹9k</option>
+                        <option value="10000-99999">₹10k+</option>
                     </select>
                 </div>
                 <div class="sd"></div>
@@ -397,7 +407,7 @@
         }
         function initMap() {
             window._mapInit = true;
-            const map = L.map('map').setView([28.6139, 77.209], 13);
+            const map = L.map('map').setView([31.2560, 75.7051], 15);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OSM contributors' }).addTo(map);
             window.PROPERTIES.forEach(p => {
                 if (p.lat && p.lng) L.marker([p.lat, p.lng]).addTo(map).bindPopup(`<b>${p.title}</b><br>₹${p.price.toLocaleString()}/mo`);

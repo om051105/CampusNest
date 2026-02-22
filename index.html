@@ -466,18 +466,26 @@
                     <div class="search-bar fade-in-up delay-3">
                         <div class="search-field">
                             <i class="fa-solid fa-location-dot"></i>
-                            <input id="locationSearch" type="text" placeholder="University or Area..."
-                                autocomplete="off">
+                            <select id="locationSearch">
+                                <option value="">Select Locality...</option>
+                                <option value="Lawgate - Backgate">Lawgate (Backgate)</option>
+                                <option value="Lawgate - North">Lawgate (North)</option>
+                                <option value="Lawgate - South">Lawgate (South)</option>
+                                <option value="Lawgate - West">Lawgate (West)</option>
+                                <option value="Greenvalley">Greenvalley</option>
+                            </select>
                         </div>
                         <div class="search-divider"></div>
                         <div class="search-field">
                             <i class="fa-solid fa-rupee-sign"></i>
-                            <select>
+                            <select id="budgetSearch">
                                 <option value="">Budget</option>
-                                <option>Under ₹5,000</option>
-                                <option>₹5,000 – ₹10,000</option>
-                                <option>₹10,000 – ₹20,000</option>
-                                <option>₹20,000+</option>
+                                <option value="0-5000">Under ₹5,000</option>
+                                <option value="5000-6000">₹5,000 – ₹6,000</option>
+                                <option value="6000-7000">₹6,000 – ₹7,000</option>
+                                <option value="7000-8000">₹7,000 – ₹8,000</option>
+                                <option value="8000-9000">₹8,000 – ₹9,000</option>
+                                <option value="10000-99999">₹10,000 and above</option>
                             </select>
                         </div>
                         <div class="search-divider"></div>
