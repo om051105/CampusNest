@@ -2,14 +2,11 @@
 
 
 window.PROPERTIES = [
-    { id: 1, title: 'Luxury 1BHK - Lawgate North', price: 8500, distance: 0.5, distLabel: '0.5 km', type: '1BHK / 2BHK', gender: 'Mixed', match: 98, rating: 4.8, reviews: 43, locality: 'Lawgate - North', lat: 31.2570, lng: 75.7060, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Power Backup', 'Furnished'] },
-    { id: 2, title: 'Cozy PG for Girls - Greenvalley', price: 6500, distance: 1.2, distLabel: '1.2 km', type: 'PG', gender: 'Girls', match: 92, rating: 4.6, reviews: 28, locality: 'Greenvalley', lat: 31.2520, lng: 75.7010, img: 'https://images.unsplash.com/photo-1502672260266-1c1e52409802?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Food', 'CCTV', 'Laundry'] },
-    { id: 3, title: 'Spacious Shared Room - Lawgate Backgate', price: 5500, distance: 0.2, distLabel: '0.2 km', type: 'Apartment', gender: 'Boys', match: 85, rating: 4.3, reviews: 15, locality: 'Lawgate - Backgate', lat: 31.2580, lng: 75.7040, img: 'https://images.unsplash.com/photo-1502005097973-ef569427e1ea?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Parking'] },
-    { id: 4, title: 'Premium Apartment - Lawgate South', price: 12000, distance: 0.8, distLabel: '0.8 km', type: 'Apartment', gender: 'Mixed', match: 88, rating: 4.7, reviews: 61, locality: 'Lawgate - South', lat: 31.2540, lng: 75.7060, img: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'AC', 'Furnished'] },
-    { id: 5, title: 'Budget PG Boys - Lawgate West', price: 4500, distance: 0.6, distLabel: '0.6 km', type: 'PG', gender: 'Boys', match: 80, rating: 4.0, reviews: 9, locality: 'Lawgate - West', lat: 31.2550, lng: 75.7020, img: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Food'] },
-    { id: 6, title: 'Executive 1BHK - Greenvalley', price: 7500, distance: 1.5, distLabel: '1.5 km', type: '1BHK / 2BHK', gender: 'Mixed', match: 75, rating: 4.9, reviews: 37, locality: 'Greenvalley', lat: 31.2530, lng: 75.7000, img: 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Housekeeping', 'Parking'] },
-    { id: 7, title: 'Girls Hostel - Lawgate North', price: 5500, distance: 0.9, distLabel: '0.9 km', type: 'PG', gender: 'Girls', match: 91, rating: 4.5, reviews: 22, locality: 'Lawgate - North', lat: 31.2565, lng: 75.7070, img: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['CCTV', 'Food', 'Laundry', 'WiFi'] },
-    { id: 8, title: 'Trendy Co-Living - Lawgate South', price: 7800, distance: 1.1, distLabel: '1.1 km', type: '1BHK / 2BHK', gender: 'Mixed', match: 83, rating: 4.4, reviews: 55, locality: 'Lawgate - South', lat: 31.2535, lng: 75.7055, img: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'Lounge', 'AC'] },
+    { id: 1, title: 'Luxury 1BHK - Lawgate North', price: 8500, type: '1BHK / 2BHK', gender: 'Mixed', match: 98, rating: 4.8, reviews: 43, locality: 'Lawgate - North', lat: 31.2570, lng: 75.7060, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Power Backup', 'Furnished'] },
+    { id: 2, title: 'Cozy PG for Girls - Greenvalley', price: 6500, type: 'PG', gender: 'Girls', match: 92, rating: 4.6, reviews: 28, locality: 'Greenvalley', lat: 31.2520, lng: 75.7010, img: 'https://images.unsplash.com/photo-1502672260266-1c1e52409802?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Food', 'CCTV', 'Laundry'] },
+    { id: 3, title: 'Spacious Shared Room - Lawgate Backgate', price: 5500, type: 'Apartment', gender: 'Boys', match: 85, rating: 4.3, reviews: 15, locality: 'Lawgate - Backgate', lat: 31.2580, lng: 75.7040, img: 'https://images.unsplash.com/photo-1502005097973-ef569427e1ea?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Parking'] },
+    { id: 4, title: 'Premium Apartment - Lawgate South', price: 12000, type: 'Apartment', gender: 'Mixed', match: 88, rating: 4.7, reviews: 61, locality: 'Lawgate - South', lat: 31.2540, lng: 75.7060, img: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'AC', 'Furnished'] },
+    { id: 5, title: 'Budget PG Boys - Lawgate West', price: 4500, type: 'PG', gender: 'Boys', match: 80, rating: 4.0, reviews: 9, locality: 'Lawgate - West', lat: 31.2550, lng: 75.7020, img: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Food'] }
 ];
 
 let wishlist = new Set();
@@ -25,7 +22,6 @@ function renderProperties(props, container) {
         <div class="property-card fade-in-up" onclick="window.location.href='property.html'">
             <div class="property-card-img">
                 <img src="${p.img}" alt="${p.title}" loading="lazy">
-                <div class="match-pill"><i class="fa-solid fa-bolt" style="font-size:0.7rem"></i> ${p.match}% Match</div>
                 <button class="wishlist-btn ${wishlist.has(p.id) ? 'active' : ''}" onclick="event.stopPropagation();toggleWish(${p.id},this)">
                     <i class="fa-${wishlist.has(p.id) ? 'solid' : 'regular'} fa-heart ${wishlist.has(p.id) ? '' : ''}"></i>
                 </button>
@@ -33,7 +29,7 @@ function renderProperties(props, container) {
             </div>
             <div class="property-card-body">
                 <h3 style="font-size:0.975rem;margin-bottom:0.4rem;line-height:1.4">${p.title}</h3>
-                <p class="text-muted text-sm mb-3"><i class="fa-solid fa-location-dot"></i> ${p.distLabel} from campus</p>
+                <p class="text-muted text-sm mb-3"><i class="fa-solid fa-location-dot"></i> Near LPU Campus</p>
                 <div class="flex gap-2 flex-wrap mb-3">
                     <span class="badge badge-primary" style="font-size:0.7rem">${p.type}</span>
                     <span class="badge badge-muted" style="font-size:0.7rem">${p.gender}</span>
@@ -183,15 +179,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initAnimations();
     initCategoryChips();
 
-    
+
     const grid = document.getElementById('propertiesGrid');
     if (grid) renderProperties(window.PROPERTIES.slice(0, 6), grid);
 
-    
+
     const output = document.getElementById('propertyOutput');
     if (output) filterAndRender();
 
-    
+
     const dashGrid = document.getElementById('property-grid');
     if (dashGrid) renderProperties(window.PROPERTIES.slice(0, 4), dashGrid);
 });

@@ -288,7 +288,7 @@
     </nav>
 
     <div class="container" style="padding-top:2rem">
-        
+
         <div class="text-muted text-sm mb-3" style="display:flex;align-items:center;gap:0.4rem">
             <a href="index.html" class="text-primary">Home</a> <i class="fa-solid fa-chevron-right"
                 style="font-size:0.7rem"></i>
@@ -303,8 +303,7 @@
                             class="fa-solid fa-circle-check"></i> Verified Owner</span><span
                         class="badge badge-primary"><i class="fa-solid fa-award"></i> Top Rated</span></div>
                 <h1 style="font-size:2rem;margin-bottom:0.4rem">Luxury 1BHK Near Campus Main Gate</h1>
-                <p class="text-muted"><i class="fa-solid fa-location-dot"></i> 45 Lawgate Road, Phagwara &bull; 0.5
-                    km from LPU Campus</p>
+                <p class="text-muted"><i class="fa-solid fa-location-dot"></i> 45 Lawgate Road, Phagwara</p>
             </div>
             <div class="flex gap-2">
                 <button class="btn btn-outline btn-sm" onclick="showToast('info','Link copied to clipboard!')"><i
@@ -314,7 +313,7 @@
             </div>
         </div>
 
-        
+
         <div class="gallery" onclick="openLightbox()">
             <div class="gallery-main"><img
                     src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=900&q=80"
@@ -330,33 +329,17 @@
             </div>
         </div>
 
-        
+
         <div class="lightbox" id="lightbox">
             <button class="lb-close" onclick="closeLightbox()"><i class="fa-solid fa-xmark"></i></button>
             <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80"
                 alt="Gallery">
         </div>
 
-        
+
         <div class="detail-layout">
             <div>
-                
-                <div class="ai-score-bar">
-                    <div class="score-ring"><span>96%</span></div>
-                    <div>
-                        <h3 style="font-size:1.2rem;margin-bottom:0.25rem">🎯 Near-Perfect AI Match!</h3>
-                        <p class="text-muted text-sm">Based on your preferences: 1BHK • ≤1 km • WiFi + AC • ₹5k–12k
-                            budget</p>
-                        <div class="flex gap-2 mt-2 flex-wrap">
-                            <span class="badge badge-secondary">✓ Distance</span>
-                            <span class="badge badge-secondary">✓ Budget</span>
-                            <span class="badge badge-secondary">✓ Amenities</span>
-                            <span class="badge badge-primary">✓ Room Type</span>
-                        </div>
-                    </div>
-                </div>
 
-                
                 <div class="tabs">
                     <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
                     <button class="tab-btn" onclick="switchTab('amenities',this)">Amenities</button>
@@ -458,7 +441,7 @@
                         <p class="text-muted text-sm">"Great location and owner is very responsive. WiFi speed is
                             excellent."</p>
                     </div>
-                    
+
                     <div class="card mt-4">
                         <h4 class="mb-4">Leave a Review</h4>
                         <div class="stars mb-3" style="font-size:1.5rem;cursor:pointer" id="starPicker">☆☆☆☆☆</div>
@@ -469,7 +452,7 @@
                 </div>
             </div>
 
-            
+
             <div>
                 <div class="sticky-card">
                     <div class="price-big">₹8,500 <span
@@ -510,7 +493,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="card mt-6" style="padding:1.5rem">
                     <h4 class="mb-4"><i class="fa-solid fa-address-book text-primary" style="margin-right:0.5rem"></i>
                         Essential Contacts</h4>
@@ -527,7 +510,9 @@
                                     <div class="text-muted" style="font-size:0.75rem">Mr. Sharma</div>
                                 </div>
                             </div>
-                            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-phone"></i></button>
+                            <button class="btn btn-outline btn-sm"
+                                onclick="showToast('info','Calling +91 98140-5XXXX...')"><i class="fa-solid fa-phone"
+                                    style="margin-right:0.3rem"></i> +91 98140-5XXXX</button>
                         </div>
                         <div class="flex justify-between items-center pb-3"
                             style="border-bottom:1px solid var(--border-color)">
@@ -541,7 +526,9 @@
                                     <div class="text-muted" style="font-size:0.75rem">Daily 9 AM - 12 PM</div>
                                 </div>
                             </div>
-                            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-phone"></i></button>
+                            <button class="btn btn-outline btn-sm"
+                                onclick="showToast('info','Calling +91 85560-2XXXX...')"><i class="fa-solid fa-phone"
+                                    style="margin-right:0.3rem"></i> +91 85560-2XXXX</button>
                         </div>
                         <div class="flex justify-between items-center pb-3"
                             style="border-bottom:1px solid var(--border-color)">
@@ -555,7 +542,9 @@
                                     <div class="text-muted" style="font-size:0.75rem">24/7 Emergency</div>
                                 </div>
                             </div>
-                            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-phone"></i></button>
+                            <button class="btn btn-outline btn-sm"
+                                onclick="showToast('info','Calling +91 78370-1XXXX...')"><i class="fa-solid fa-phone"
+                                    style="margin-right:0.3rem"></i> +91 78370-1XXXX</button>
                         </div>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-3">
@@ -568,7 +557,9 @@
                                     <div class="text-muted" style="font-size:0.75rem">Cooling Experts</div>
                                 </div>
                             </div>
-                            <button class="btn btn-outline btn-sm"><i class="fa-solid fa-phone"></i></button>
+                            <button class="btn btn-outline btn-sm"
+                                onclick="showToast('info','Calling +91 95010-8XXXX...')"><i class="fa-solid fa-phone"
+                                    style="margin-right:0.3rem"></i> +91 95010-8XXXX</button>
                         </div>
                     </div>
                 </div>
