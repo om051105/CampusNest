@@ -2,11 +2,11 @@
 
 
 window.PROPERTIES = [
-    { id: 1, title: 'Luxury 1BHK - Lawgate North', price: 8500, type: '1BHK / 2BHK', gender: 'Mixed', match: 98, rating: 4.8, reviews: 43, locality: 'Lawgate - North', lat: 31.2570, lng: 75.7060, img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'AC', 'Power Backup', 'Furnished'] },
-    { id: 2, title: 'Cozy PG for Girls - Greenvalley', price: 6500, type: 'PG', gender: 'Girls', match: 92, rating: 4.6, reviews: 28, locality: 'Greenvalley', lat: 31.2520, lng: 75.7010, img: 'https://images.unsplash.com/photo-1502672260266-1c1e52409802?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Food', 'CCTV', 'Laundry'] },
-    { id: 3, title: 'Spacious Shared Room - Lawgate Backgate', price: 5500, type: 'Apartment', gender: 'Boys', match: 85, rating: 4.3, reviews: 15, locality: 'Lawgate - Backgate', lat: 31.2580, lng: 75.7040, img: 'https://images.unsplash.com/photo-1502005097973-ef569427e1ea?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Parking'] },
-    { id: 4, title: 'Premium Apartment - Lawgate South', price: 12000, type: 'Apartment', gender: 'Mixed', match: 88, rating: 4.7, reviews: 61, locality: 'Lawgate - South', lat: 31.2540, lng: 75.7060, img: 'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?auto=format&fit=crop&w=600&q=80', verified: true, amenities: ['WiFi', 'Gym', 'AC', 'Furnished'] },
-    { id: 5, title: 'Budget PG Boys - Lawgate West', price: 4500, type: 'PG', gender: 'Boys', match: 80, rating: 4.0, reviews: 9, locality: 'Lawgate - West', lat: 31.2550, lng: 75.7020, img: 'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=600&q=80', verified: false, amenities: ['WiFi', 'Food'] }
+    { id: 1, title: 'PG Near Pizza Virus Greenvalley', price: 5000, type: 'PG', gender: 'Girls', match: 98, rating: 4.8, reviews: 43, locality: 'Greenvalley', lat: 31.2530, lng: 75.7000, img: 'assets/images/pg_room_16.jpeg', verified: true, amenities: ['WiFi', 'Food', 'Furnished'] },
+    { id: 2, title: 'Cozy PG for Girls - Greenvalley', price: 6500, type: 'PG', gender: 'Girls', match: 92, rating: 4.6, reviews: 28, locality: 'Greenvalley', lat: 31.2520, lng: 75.7010, img: 'assets/images/pg_room_2.jpeg', verified: true, amenities: ['WiFi', 'Food', 'CCTV', 'Laundry'] },
+    { id: 3, title: 'Spacious Shared Room - Lawgate Backgate', price: 5500, type: 'Apartment', gender: 'Boys', match: 85, rating: 4.3, reviews: 15, locality: 'Lawgate - Backgate', lat: 31.2580, lng: 75.7040, img: 'assets/images/pg_room_3.jpeg', verified: false, amenities: ['WiFi', 'Parking'] },
+    { id: 4, title: 'Premium Apartment - Lawgate South', price: 12000, type: 'Apartment', gender: 'Mixed', match: 88, rating: 4.7, reviews: 61, locality: 'Lawgate - South', lat: 31.2540, lng: 75.7060, img: 'assets/images/pg_room_4.jpeg', verified: true, amenities: ['WiFi', 'Gym', 'AC', 'Furnished'] },
+    { id: 5, title: 'Budget PG Boys - Lawgate West', price: 4500, type: 'PG', gender: 'Boys', match: 80, rating: 4.0, reviews: 9, locality: 'Lawgate - West', lat: 31.2550, lng: 75.7020, img: 'assets/images/pg_room_5.jpeg', verified: false, amenities: ['WiFi', 'Food'] }
 ];
 
 let wishlist = new Set();
